@@ -4,39 +4,43 @@ csvpath = os.path.join('.', 'Resources', 'election_data.csv')
 
 # list to keep track of number of voters
 voter_IDs = []
-
-candidates = ["Khan", "Correy", "Li", "O'Tooley"]
-votes = [0,0,0,0]
+# list of candidates to be generated from data
+candidates = []
+# list to keep track of votes for each candidate
+votes = []
 
 with open(csvpath, 'r') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
     csv_header = next(csvreader)
 
-# loop through rows, each row w/ data adds to voter ID list
-    for row in csvreader:
-        if len(row[0]) > 0:
-            voter_IDs.append(row)
-        if row[2] == "Khan":
-                votes[0] = votes[0] + 1
-        elif row[2] == "Correy":
-                votes[1] = votes[1] + 1
-        elif row[2] == "Li":
-                votes[2] = votes[2] + 1
-        elif row[2] == "O'Tooley":
-                votes[3] = votes[3] + 1
+    # loop through rows for name + quantity of unique candidates and count voters
+    for row in csvreader:        
+        if row[2] not in candidates:
+            candidates.append(row[2])
+            votes.append(0)
+        if row[0] is not None:
+            voter_IDs.append(row[0])
+    
+        # after gathering candidate names, count votes
+        for i in range(0,len(candidates)):
+            if row[2] == candidates[i]:
+                votes[i] = votes[i] +1
+        
+    # winner declared based on highest number of votes, indexes matched up
+    winner = candidates[votes.index(max(votes))]
 
-# use indexes from various list for printing
+    # use indexes from various lists for printing
     print("Election Results")
     print("-------------------------")
     print(f"Total Votes: {len(voter_IDs)}")
     print("-------------------------")
-    print(f"Khan: 63.000% ({votes[0]})")
-    print(f"Correy: 20.000% ({votes[1]})")
-    print(f"Li: 14.000% ({votes[2]})")
-    print(f"O'Tooley: 3.000% ({votes[3]})")
+
+    # loop through candidate name and their results, rounded to nearest whole percent, with 3 trailing zeroes
+    for i in range(0,len(candidates)):
+        print(f"{candidates[i]}: {'{:.3%}'.format(round((votes[i] / len(voter_IDs)),2))} ({votes[i]})")
+
     print("-------------------------")
-    print("Winner: Khan")
+    print(f"Winner: {winner}")
     print("-------------------------")
 
-
-# EXPORT TO TEXT FILE!!
+    # EXPORT TO TEXT FILE!!
