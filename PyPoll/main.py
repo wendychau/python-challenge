@@ -30,17 +30,31 @@ with open(csvpath, 'r') as csvfile:
     winner = candidates[votes.index(max(votes))]
 
     # use indexes from various lists for printing
-    print("Election Results")
-    print("-------------------------")
-    print(f"Total Votes: {len(voter_IDs)}")
-    print("-------------------------")
+    print("Election Results\n"
+        "-------------------------\n"
+        f"Total Votes: {len(voter_IDs)}\n"
+        "-------------------------")
 
     # loop through candidate name and their results, rounded to nearest whole percent, with 3 trailing zeroes
     for i in range(0,len(candidates)):
         print(f"{candidates[i]}: {'{:.3%}'.format(round((votes[i] / len(voter_IDs)),2))} ({votes[i]})")
 
-    print("-------------------------")
-    print(f"Winner: {winner}")
-    print("-------------------------")
+    print("-------------------------\n"
+        f"Winner: {winner}\n"
+        "-------------------------\n")
 
-    # EXPORT TO TEXT FILE!!
+    # export to text
+    file_poll = open("election_results.txt","w")
+    file_poll.write("Election Results\n"
+        "-------------------------\n"
+        f"Total Votes: {len(voter_IDs)}\n"
+        "-------------------------\n")
+
+    for i in range(0,len(candidates)):
+        file_poll.write(f"{candidates[i]}: {'{:.3%}'.format(round((votes[i] / len(voter_IDs)),2))} ({votes[i]})\n")
+
+    file_poll.write("-------------------------\n"
+        f"Winner: {winner}\n"
+        "-------------------------\n")
+
+    file_poll.close()

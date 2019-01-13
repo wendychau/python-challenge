@@ -31,14 +31,24 @@ with open(csvpath, 'r') as csvfile:
     greatest_increase_month = months[monthly_change.index(max(monthly_change))+1]
     greatest_decrease_month = months[monthly_change.index(min(monthly_change))+1]
 
-    print("Financial Analysis")
-    print("----------------------------")
-    print(f"Total Months: {len(months)}")
-    print(f"Total: ${sum(profit_loss)}")
-    print(f"Average Change: ${round(average_change,2)}")
+    print("Financial Analysis\n"
+        "----------------------------\n"
+        f"Total Months: {len(months)}\n"
+        f"Total: ${sum(profit_loss)}\n"
+        f"Average Change: ${round(average_change,2)}\n"
 
-    # using indexes from lists, find greatest increase/decrease months
-    print(f"Greatest Increase in Profits: {greatest_increase_month} (${max(monthly_change)})")
-    print(f"Greatest Decrease in Profits: {greatest_decrease_month} (${min(monthly_change)})")
+        # using indexes from lists, find greatest increase/decrease months
+        f"Greatest Increase in Profits: {greatest_increase_month} (${max(monthly_change)})\n"
+        f"Greatest Decrease in Profits: {greatest_decrease_month} (${min(monthly_change)})")
 
-# EXPORT TO TEXT FILE!!
+    # export to text file
+    file_bank = open("financial_analysis.txt","w")
+    file_bank.write("Financial Analysis\n"
+        "----------------------------\n"
+        f"Total Months: {len(months)}\n"
+        f"Total: ${sum(profit_loss)}\n"
+        f"Average Change: ${round(average_change,2)}\n"
+        f"Greatest Increase in Profits: {greatest_increase_month} (${max(monthly_change)})\n"
+        f"Greatest Decrease in Profits: {greatest_decrease_month} (${min(monthly_change)})\n")
+
+    file_bank.close()
